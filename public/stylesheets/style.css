@@ -1,0 +1,13 @@
+body {
+  margin: 0 auto;
+  max-width: 960px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+article{
+  padding: 50px;
+}
+
+a {
+  color: #00B7FF;
+}

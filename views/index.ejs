@@ -1,0 +1,73 @@
+<html>
+  <head>
+    <meta http-equiv="content-type"
+        content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" />
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <header>
+        <h1 class="text-center h2"><%=title %></h1>
+    </header>
+    <article class="text-center">
+      <img src="/images/raspi.jpg"  name="webcam" />
+      <br>
+      <br>
+      <button class="btn btn-default" id="stream">Stream</button>
+      <button class="btn btn-default" id="qrbutton">read qr</button>
+      <br>
+      <br>
+      <div id="result"></div>
+
+    </article>
+    <script src="http://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script>
+    var streaming = false;
+    var reading_qr = false;
+    $("#stream").click(function() {
+        if(streaming) {
+            $("#stream").html("Stream")
+            $.get("http://localhost:3000/stop", { id: 'stop' } );
+            streaming = false;
+        } else {
+            $("#stream").html("Stop")
+            $.get("http://localhost:3000/stream", { id: 'stream' } );
+            streaming = true;
+        }
+    });
+    $("#qrbutton").click(function() {
+        if(reading_qr) {
+            $("#qrbutton").html("read qr")
+            $.get("http://localhost:3000/qrcode_stop", { id: 'stop' } );
+            reading_qr = false;
+        } else {
+            $("#qrbutton").html("stop qr")
+            $.get("http://localhost:3000/qrcode", { id: 'stream' } );
+            reading_qr = true;
+        }
+    });
+    </script>
+    <script>
+      cam = new Image();
+      cam.src = document.webcam.src;
+      webcamTimer();
+
+      function webcamTimer() {
+        var now = new Date();
+        document.webcam.src = cam.src + "?" + now.getTime();
+        setTimeout("webcamTimer()",100);
+      }
+
+      function resultTimer() {
+          $.get("http://localhost:3000/get_result", function(data) {
+              $("#result").html(data);
+          });
+          setTimeout("resultTimer()",1000);
+      }
+      resultTimer()
+    </script>
+  </body>
+</html>
