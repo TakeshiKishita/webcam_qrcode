@@ -16,10 +16,13 @@
       <img src="/images/raspi.jpg"  name="webcam" />
       <br>
       <br>
+
+<!--
       <button class="btn btn-default" id="stream">Stream</button>
       <button class="btn btn-default" id="qrbutton">read qr</button>
       <br>
       <br>
+-->
       <div id="result"></div>
 
     </article>
@@ -64,12 +67,12 @@ console.log("begin stream!!");
       }
 
       function resultTimer() {
-          $.get("http://localhost:3000/get_result", function(data) {
+          $.get("http://"+ip+":3000/get_result", function(data) {
               $("#result").html(data);
           });
           setTimeout("resultTimer()",1000);
       }
-      //resultTimer()
+      resultTimer()
     </script>
   </body>
 </html>

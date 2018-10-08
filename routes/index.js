@@ -1,5 +1,3 @@
-
-
 //expressの使用許可
 var express = require('express');
 var router = express.Router();
@@ -10,6 +8,34 @@ var spawn = require('child_process').spawn;
 //ホーム画面index.ejsの表示
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Ras Pi Stream' });
+var raspistill = spawn('ffmpeg', ['-f', 'video4linux2', '-i',  '/dev/v4l/by-id/usb-Etron_Technology__Inc._UCAM-C0220F-video-index0',  '-r', '10', '-update', '1', '-qscale:v', '2', './public/images/raspi.jpg', '-y'])
+
+raspistill.stdout.on('data', function (data) {
+  console.log('stdout(stream): ' + data);
+});
+
+raspistill.stderr.on('data', function (data) {
+  console.log('stderr(stream): ' + data);
+});
+
+raspistill.on('close', function (code) {
+  console.log('child process exited with code ' + code);
+});
+
+var zbar = spawn('bin/read-qr.rb');
+
+zbar.stdout.on('data', function (data) {
+  console.log('stdout(zbar): ' + data);
+});
+
+zbar.stderr.on('data', function (data) {
+  console.log('stderr(zbar): ' + data);
+});
+zbar.on('close', function (code) {
+  console.log('child process exited with code ' + code);
+});
+
+
 });
 
 //ストリームボタンクリック時の処理
@@ -18,7 +44,7 @@ router.get('/stream', function (req, res) {
   var id = req.query.id;
 
 //var raspistill = spawn('raspistill', [ '-o', './public/images/raspi.jpg', '-h', '600', '-w', '960', '-tl', '100', '-t', '60000', '-n', '-q', '100']);
-var raspistill = spawn('ffmpeg', ['-f', 'video4linux2', '-i',  '/dev/v4l/by-id/usb-Etron_Technology__Inc._UCAM-C0220F-video-index0',  '-r', '10', '-update', '1', './public/images/raspi.jpg', '-y'])
+var raspistill = spawn('ffmpeg', ['-f', 'video4linux2', '-i',  '/dev/v4l/by-id/usb-Etron_Technology__Inc._UCAM-C0220F-video-index0',  '-r', '10', '-update', '1', '-qscale:v', '2', './public/images/raspi.jpg', '-y'])
 
 raspistill.stdout.on('data', function (data) {
   console.log('stdout(stream): ' + data);
