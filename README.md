@@ -4,7 +4,7 @@
 ## 準備
 - `sudo apt-get install zbar-tools`
 - `sudo apt-get install ffmpeg`
-- `curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -`
+- `curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -`  
 `sudo apt-get install -y nodejs`
 
 
