@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
     <title><%= title %></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" />
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
@@ -27,25 +27,27 @@
     <script>
     var streaming = false;
     var reading_qr = false;
+    var ip = "192.168.158.114";
     $("#stream").click(function() {
         if(streaming) {
-            $("#stream").html("Stream")
-            $.get("http://localhost:3000/stop", { id: 'stop' } );
+            $("#stream").html("Stream");
+            $.get("http://"+ip+":3000/stop", { id: 'stop' } );
             streaming = false;
         } else {
-            $("#stream").html("Stop")
-            $.get("http://localhost:3000/stream", { id: 'stream' } );
+console.log("begin stream!!");
+            $("#stream").html("Stop");
+            $.get("http://"+ip+":3000/stream", { id: 'stream' } );
             streaming = true;
         }
     });
     $("#qrbutton").click(function() {
         if(reading_qr) {
-            $("#qrbutton").html("read qr")
-            $.get("http://localhost:3000/qrcode_stop", { id: 'stop' } );
+            $("#qrbutton").html("read qr");
+            $.get("http://"+ip+":3000/qrcode_stop", { id: 'stop' } );
             reading_qr = false;
         } else {
-            $("#qrbutton").html("stop qr")
-            $.get("http://localhost:3000/qrcode", { id: 'stream' } );
+            $("#qrbutton").html("stop qr");
+            $.get("http://"+ip+":3000/qrcode", { id: 'stream' } );
             reading_qr = true;
         }
     });
@@ -67,7 +69,7 @@
           });
           setTimeout("resultTimer()",1000);
       }
-      resultTimer()
+      //resultTimer()
     </script>
   </body>
 </html>

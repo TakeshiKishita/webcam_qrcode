@@ -17,7 +17,8 @@ router.get('/stream', function (req, res) {
   console.log(req.query);
   var id = req.query.id;
 
-var raspistill = spawn('raspistill', [ '-o', './public/images/raspi.jpg', '-h', '600', '-w', '960', '-tl', '100', '-t', '60000', '-n', '-q', '100']);
+//var raspistill = spawn('raspistill', [ '-o', './public/images/raspi.jpg', '-h', '600', '-w', '960', '-tl', '100', '-t', '60000', '-n', '-q', '100']);
+var raspistill = spawn('ffmpeg', ['-f', 'video4linux2', '-i',  '/dev/v4l/by-id/usb-Etron_Technology__Inc._UCAM-C0220F-video-index0',  '-r', '10', '-update', '1', './public/images/raspi.jpg', '-y'])
 
 raspistill.stdout.on('data', function (data) {
   console.log('stdout(stream): ' + data);
@@ -37,7 +38,7 @@ raspistill.on('close', function (code) {
 router.get('/stop', function (req, res) {
   console.log(req.query);
   var id = req.query.id;
-  var raspistill = spawn('killall', ['raspistill']);
+  var raspistill = spawn('killall', ['ffmpeg']);
 
 raspistill.stdout.on('data', function (data) {
   console.log('stdout(stop): ' + data);
