@@ -4,11 +4,9 @@
 ## 準備
 - `sudo apt-get install zbar-tools`
 - `sudo apt-get install ffmpeg`
+- `curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -`
+`sudo apt-get install -y nodejs`
 
-```
-curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
-sudo apt-get install -y nodejs
-```
 
 ## 使い方
 views/index.js の ip を 現在の jetson のIPに書き換える  
