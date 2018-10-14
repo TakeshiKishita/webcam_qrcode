@@ -14,7 +14,7 @@ views/index.js の ip を 現在の jetson のIPに書き換える
 routes/index.js の /dev/v4l/by-id/usb-Etron_Technology__Inc._UCAM-C0220F-video-index0 を現在のWEBカメラのものに書き換える。  
 
 ```
-npm install
+sudo npm install
 ```
 を実行しその後
 ```
